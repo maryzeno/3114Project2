@@ -3,16 +3,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Reads in a file and calls the methods to insert, search and delete seminars
+ *
+ * @author Hafsa Khan (hfsakhn)
+ * @author Mary Zeno (maryzeno)
+ * @version 09/19/2023
+ */
 public class CommandProcessor {
-    //private static StudentDB db;
+    private static StudentDB db;
 
     public CommandProcessor(String[] args) {
-        //db = new StudentDB(args[0], args[1]);
-        beginParsing(args[2]);
+        db = new StudentDB(args[0]);
+        beginParsing(args[1]);
 
     }
-// trim white lines
-// when im searaching im not printing
 
 
     public void beginParsing(String filename) {
@@ -39,16 +44,11 @@ public class CommandProcessor {
                 String description;
                 int key;
 
-                // switch (command) {
-                // case "insert":
                 if (command.equals("insert")) {
                     key = myScanner.nextInt();
-// System.out.println(key);
                     myScanner.nextLine();
                     title = myScanner.nextLine().trim();
-// System.out.println(title);
                     dateTime = myScanner.next().trim();
-// System.out.println(dateTime);
                     length = myScanner.nextInt();
                     x = myScanner.nextShort();
                     y = myScanner.nextShort();
@@ -71,32 +71,32 @@ public class CommandProcessor {
 
                     description = myScanner.nextLine().trim();
 
-                    //db.insert(title, dateTime, length, x, y, cost, keyWordArr,
-                        //description, key);
+                    db.insert(title, dateTime, length, x, y, cost, keyWordArr,
+                        description, key);
 
                 }
 
                 // case "search":
                 else if (command.equals("search")) {
                     int searchValue = myScanner.nextInt();
-                    //db.search(searchValue);
+                    db.search(searchValue);
                 }
 
                 // case "print":
                 else if (command.equals("print")) {
                     type = myScanner.next();
                     if (type.equals("hashtable")) {
-                       // db.printHashTable();
+                        db.printHashTable();
                     }
                     else {
-                       // db.printBlocks();
+                        db.printBlocks();
                     }
                 }
 
                 // case "delete":
                 else if (command.equals("delete")) {
                     int deleteValue = myScanner.nextInt();
-                   // db.delete(deleteValue);
+                    db.delete(deleteValue);
                 }
             }
         }
@@ -108,6 +108,3 @@ public class CommandProcessor {
     }
 
 }
-
-
-

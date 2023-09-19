@@ -31,6 +31,8 @@
 
 
 public class SemSearch {
+    private static CommandProcessor commandProcessor;
+    
     /**
      * @param args
      *     Command line parameters
@@ -38,5 +40,6 @@ public class SemSearch {
     public static void main(String[] args) {
         // This is the main file for the program.
         Seminar dum = new Seminar();
+        commandProcessor = new CommandProcessor(args);
     }
 }
