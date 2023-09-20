@@ -1,9 +1,9 @@
 
-public class binarySearchTree<E> {
-    private BSTNode root;
+public class binarySearchTree<E> extends KVPair{
+    private BSTNode<E> root;
     private int nodeCount;
     
-    public binarySearchTree() {
+    public binarySearchTree(){
         
     }
     

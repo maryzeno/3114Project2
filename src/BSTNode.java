@@ -1,8 +1,8 @@
 
 public class BSTNode<E> {
     private E valueElement;
-    private BSTNode left;
-    private BSTNode right;
+    private BSTNode<E> left;
+    private BSTNode<E> right;
     
     public BSTNode(E valueElement) {
         this.valueElement = valueElement;

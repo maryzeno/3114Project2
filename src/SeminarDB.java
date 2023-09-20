@@ -6,8 +6,8 @@
  * @author Mary Zeno (maryzeno)
  * @version 09/19/2023
  */
-public class StudentDB {
-    private static Record record; // the record that the rest of
+public class SeminarDB {
+    //private static Record record; // the record that the rest of
     // the class uses
     private static Seminar seminar; // the seminar that the rest of
     // the class uses
@@ -22,7 +22,7 @@ public class StudentDB {
      * @param two
      *            is the size of the memManager
      */
-    public StudentDB(String one) {
+    public SeminarDB(String one) {
         //binTree = new binTree(one);
     }
 
