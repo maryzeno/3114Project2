@@ -14,19 +14,23 @@ public class BSTNode<E> {
         return valueElement;
     }
     
-    public BSTNode getLeft() {
+    public void setValueElement(E elementParam) {
+        valueElement = elementParam;
+    }
+    
+    public BSTNode<E> getLeft() {
         return left;
     }
 
-    public BSTNode getRight() {
+    public BSTNode<E> getRight() {
         return right;
     }
     
-    public void setLeft(BSTNode leftParam) {
+    public void setLeft(BSTNode<E> leftParam) {
         left = leftParam;
     }
     
-    public void setRight(BSTNode rightParam) {
-        left = rightParam;
+    public void setRight(BSTNode<E> rightParam) {
+        right = rightParam;
     }
 }

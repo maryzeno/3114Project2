@@ -1,27 +1,28 @@
 // KVPair class definition
-public class KVPair implements Comparable {
-  Comparable theKey;
-  Object theVal;
+public class KVPair<K extends Comparable<K>, E> implements Comparable<KVPair<K, E>> {
+  K theKey;
+  E theVal;
 
-  KVPair(Comparable k, Object v) {
+  KVPair(K k, E v) {
     theKey = k;
     theVal = v;
   }
 
-  public int compareTo(Object it) throws ClassCastException {
-    if (it instanceof KVPair) // Compare two KVPair objects
-      return theKey.compareTo(((KVPair)it).key());
-    else if (it instanceof Comparable) // Compare against a key value
-      return theKey.compareTo(it);
-    else
-      throw new ClassCastException("Something comparable is expected.");
+  @Override
+  public int compareTo(KVPair<K, E> it){
+      if (it instanceof KVPair) // Compare two KVPair objects
+          return theKey.compareTo(it.key());
+        else if (it instanceof Comparable) // Compare against a key value
+          return theKey.compareTo(it.key());
+        else
+          throw new ClassCastException("Something comparable is expected.");
   }
 
-  public Comparable key() {
+  public K key() {
     return theKey;
   }
 
-  public Object value() {
+  public E value() {
     return theVal;
   }
 
@@ -35,4 +36,6 @@ public class KVPair implements Comparable {
     s += ")";
     return s;
   }
+
+
 }
