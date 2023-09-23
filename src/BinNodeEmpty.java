@@ -2,9 +2,9 @@
 public class BinNodeEmpty implements BinNode{
     private BinNodeEmpty binNodeEmpty;
     private BinNodeEmpty getInstance;
-    static private BinNodeEmpty flyweight = null;
+    static public BinNodeEmpty flyweight = null;
     
-    public BinNodeEmpty() {
+    private BinNodeEmpty() {
         
     }
 
