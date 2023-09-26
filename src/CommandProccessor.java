@@ -10,11 +10,11 @@ import java.util.Scanner;
  * @author Mary Zeno (maryzeno)
  * @version 09/19/2023
  */
-public class CommandProcessor {
-    private static StudentDB db;
+public class CommandProccessor {
+    private static SeminarDB db;
 
-    public CommandProcessor(String[] args) {
-        db = new StudentDB(args[0]);
+    public CommandProccessor(String[] args) {
+        db = new SeminarDB(args[0]);
         beginParsing(args[1]);
 
     }
@@ -78,8 +78,22 @@ public class CommandProcessor {
 
                 // case "search":
                 else if (command.equals("search")) {
-                    int searchValue = myScanner.nextInt();
-                    db.search(searchValue);
+                    String searchType = myScanner.next();
+                    if (searchType.equals("ID")) {
+                        
+                    }
+                    else if (searchType.equals("cost")) {
+
+                    }
+                    else if (searchType.equals("date")) {
+
+                    }
+                    else if (searchType.equals("keyword")) {
+
+                    }
+                    else {
+                        
+                    }
                 }
 
                 // case "print":

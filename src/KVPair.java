@@ -8,14 +8,12 @@ public class KVPair<K extends Comparable<K>, E> implements Comparable<KVPair<K, 
     theVal = v;
   }
 
-  @Override
-  public int compareTo(KVPair<K, E> it){
-      if (it instanceof KVPair) // Compare two KVPair objects
-          return theKey.compareTo(it.key());
-        else if (it instanceof Comparable) // Compare against a key value
-          return theKey.compareTo(it.key());
-        else
-          throw new ClassCastException("Something comparable is expected.");
+  public int compareTo(KVPair<K, E> it) {
+      return theKey.compareTo(it.key());
+  }
+  
+public int compareTo(K it) {
+      return theKey.compareTo(it);
   }
 
   public K key() {
@@ -36,6 +34,5 @@ public class KVPair<K extends Comparable<K>, E> implements Comparable<KVPair<K, 
     s += ")";
     return s;
   }
-
 
 }

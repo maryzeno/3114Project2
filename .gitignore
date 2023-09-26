@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 *.class
+=======
+~*
+._*
+.TemporaryItems
+.DS_Store
+Thumbs.db
+>>>>>>> branch 'master' of https://web-cat.cs.vt.edu/Web-CAT/WebObjects/Web-CAT.woa/git/StudentProject/b97d81c6-34c7-487c-8dff-43afa3105433
+/bin/

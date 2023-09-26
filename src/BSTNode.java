@@ -1,5 +1,5 @@
 
-public class BSTNode<E> {
+public class BSTNode<E extends Comparable<? super E>> {
     private E valueElement;
     private BSTNode<E> left;
     private BSTNode<E> right;
