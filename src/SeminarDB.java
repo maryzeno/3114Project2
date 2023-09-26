@@ -7,12 +7,13 @@
  * @version 09/19/2023
  */
 public class SeminarDB {
-    //private static Record record; // the record that the rest of
-    // the class uses
     private static Seminar seminar; // the seminar that the rest of
     // the class uses
-//    private static BinTree binTree;
-
+    private static BinarySearchTree idBST;
+    private static BinarySearchTree costBST;
+    private static BinarySearchTree dateBST;
+    private static BinarySearchTree keywordBST;
+    
     /**
      * this is the constructor. it sets up the hashTable and memManager for
      * the rest of the class to use
@@ -24,6 +25,10 @@ public class SeminarDB {
      */
     public SeminarDB(String one) {
         //binTree = new binTree(one);
+        idBST = new BinarySearchTree(false);
+        costBST = new BinarySearchTree(true);
+        dateBST = new BinarySearchTree(true);
+        keywordBST = new BinarySearchTree(true);
     }
 
 

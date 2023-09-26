@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author Hafsa Khan (hfsakhn)
  * @author Mary Zeno (maryzeno)
- * @version 09/19/2023
+ * @version 09/25/2023
  */
 public class CommandProccessor {
     private static SeminarDB db;
@@ -28,7 +28,7 @@ public class CommandProccessor {
                                                          // scanner
             while (myScanner.hasNext()) {
                 String command = myScanner.next().trim();
-
+                
                 String type;
 
                 String title;
@@ -78,36 +78,57 @@ public class CommandProccessor {
 
                 // case "search":
                 else if (command.equals("search")) {
-                    String searchType = myScanner.next();
-                    if (searchType.equals("ID")) {
-                        
+                    type = myScanner.next().trim(); 
+                    if (type.equals("ID")) {
+                        int id = myScanner.nextInt();
+                        db.search(id);
+                        myScanner.nextLine();
                     }
-                    else if (searchType.equals("cost")) {
-
+                    else if (type.equals("cost")) {
+                        int costA = myScanner.nextInt();
+                        int costB = myScanner.nextInt();
+                        myScanner.nextLine();
+                        db.searchRange(costA, costB);
                     }
-                    else if (searchType.equals("date")) {
-
+                    else if (type.equals("date")) {
+                        String dateA = myScanner.next().trim();
+                        String dateB = myScanner.next().trim();
+                        myScanner.nextLine();
+                        db.searchRange(dateA, dateB);
                     }
-                    else if (searchType.equals("keyword")) {
-
+                    else if (type.equals("keyword")) {
+                        String keyWord = myScanner.next().trim();
+                        db.search(keyWord);
+                        myScanner.nextLine();
                     }
                     else {
-                        
+                        Short x1 = myScanner.nextShort();
+                        Short y1 = myScanner.nextShort();
+                        int radius = myScanner.nextInt();
+                        myScanner.nextLine();
+                        db.searchLocation(x1, y1, radius);
                     }
                 }
 
                 // case "print":
                 else if (command.equals("print")) {
-                    type = myScanner.next();
-                    if (type.equals("hashtable")) {
-                        db.printHashTable();
+                    type = myScanner.next().trim();
+                    if (type.equals("date")) {
+                        db.printDate();
+                    }
+                    else if (type.equals("keyword")) {
+                        db.printKeyword();
+                    }
+                    else if (type.equals("location")) {
+                        db.printLocation();
+                    }
+                    else if (type.equals("cost")) {
+                        db.printCost();
                     }
                     else {
-                        db.printBlocks();
+                        db.printID();
                     }
                 }
-
-                // case "delete":
                 else if (command.equals("delete")) {
                     int deleteValue = myScanner.nextInt();
                     db.delete(deleteValue);
