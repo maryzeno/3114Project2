@@ -52,15 +52,15 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
     }
 
 
-    public K find(K key) { // dsa returns key, good
+    public KVPair<K, E> find(K key) { // dsa returns key, good
         return findHelp(root, key);
     }
 
 
-    private K findHelp(BSTNode<KVPair<K, E>> curr, K key) { // dsa
-                                                                               // returns
-                                                                               // key,
-                                                                               // good
+    private KVPair<K, E> findHelp(BSTNode<KVPair<K, E>> curr, K key) { // dsa
+        // returns
+        // key,
+        // good
         if (curr == null) {
             return null;
         }
@@ -68,7 +68,7 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
             return findHelp(curr.getLeft(), key);
         }
         else if (curr.getValueElement().key().compareTo(key) == 0) {
-            return curr.getValueElement().key();
+            return curr.getValueElement();
         }
         else {
             return findHelp(curr.getRight(), key);
@@ -76,10 +76,10 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
     }
 
 
-    public boolean remove(K key) { // dsa returns key, good
-        K temp = findHelp(root, key);
+    public boolean remove(KVPair<K, E> kvPair) { // dsa returns key, good
+        KVPair<K, E> temp = findHelp(root, kvPair.key());
         if (temp != null) {
-            root = removeHelp(root, key);
+            root = removeHelp(root, kvPair);
             nodeCount--;
             return true;
         }
@@ -91,15 +91,15 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
 
     private BSTNode<KVPair<K, E>> removeHelp(
         BSTNode<KVPair<K, E>> curr,
-        K key) {// dsa returns node, good
+        KVPair<K, E> kvPair) {// dsa returns node, good
 // if (curr == null) {
 // return null;
 // }
-        if (curr.getValueElement().key().compareTo(key) > 0) {
-            curr.setLeft(removeHelp(curr.getLeft(), key));
+        if (curr.getValueElement().key().compareTo(kvPair.key()) > 0) {
+            curr.setLeft(removeHelp(curr.getLeft(), kvPair));
         }
-        else if (curr.getValueElement().key().compareTo(key) < 0) {
-            curr.setRight(removeHelp(curr.getRight(), key));
+        else if (curr.getValueElement().key().compareTo(kvPair.key()) < 0) {
+            curr.setRight(removeHelp(curr.getRight(), kvPair));
         }
         else { // found it
             if (curr.getRight() != null) {
@@ -119,6 +119,7 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
         return curr;
     }
 
+
     private BSTNode<KVPair<K, E>> getMax(BSTNode<KVPair<K, E>> curr) {
         if (curr.getRight() == null) {
             return curr;
@@ -135,8 +136,72 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
         return curr;
     }
 
- public void print() {
 
- }
+    public void printID() {// need to take in depth to
+        // figure out the spaces, need for loops
+        //
+        printIDHelper(root, 0);
+    }
+
+
+    public void printCost() {// need to take in depth to
+        // figure out the spaces, need for loops
+        //
+        printCostHelper(root, 0);
+    }
+
+
+    private void printIDHelper(BSTNode<KVPair<K, E>> curr, int depth) {
+        if (curr == null) {
+            for (int i = 0; i < depth; i++) {
+                System.out.print("  ");
+            }
+            System.out.println("null");
+            return;
+        }
+        printIDHelper(curr.getRight(), depth + 1); // print the right side of
+                                                   // the tree
+
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+        System.out.println(curr.getValueElement().key() + " "); // visit the
+        // current node
+        printIDHelper(curr.getLeft(), depth + 1); // print the right side of the
+                                                  // tree
+    }
+
+
+    private void printCostHelper(BSTNode<KVPair<K, E>> curr, int depth) {
+        if (curr == null) {
+            for (int i = 0; i < depth * 2; i++) {
+                System.out.print("  ");
+            }
+            System.out.println("null");
+            return;
+        }
+        printCostHelper(curr.getRight(), depth + 1); // print the right side of
+                                                     // the tree
+
+        for (int i = 0; i < depth * 2; i++) {
+            System.out.print("  ");
+        }
+        System.out.println(curr.getValueElement().key() + " "); // visit the
+        // current node
+        printCostHelper(curr.getLeft(), depth + 1); // print the right side of
+                                                    // the
+                                                    // tree
+    }
+
+
+    private void visitID(BSTNode<KVPair<K, E>> curr) {
+        // how do i actually get the format for printing
+        System.out.println(curr.getValueElement().key() + " ");
+    }
+
+
+    private void searchRange() {
+
+    }
+
 }
-

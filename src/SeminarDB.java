@@ -7,12 +7,14 @@
  * @version 09/19/2023
  */
 public class SeminarDB {
-    private static Seminar seminar; // the seminar that the rest of
+    private Seminar seminar; // the seminar that the rest of
     // the class uses
-    private static BinarySearchTree idBST;
-    private static BinarySearchTree costBST;
-    private static BinarySearchTree dateBST;
-    private static BinarySearchTree keywordBST;
+    private KVPair kvPairID;
+    
+    private BinarySearchTree idBST;
+    private BinarySearchTree costBST;
+    private BinarySearchTree dateBST;
+    private BinarySearchTree keywordBST;
     
     /**
      * this is the constructor. it sets up the hashTable and memManager for
@@ -70,83 +72,47 @@ public class SeminarDB {
         throws Exception {
         seminar = new Seminar(id, title, dateTime, length, x, y, cost,
             keywordList, description);
-        if (hash.search(id) == null) {
-            Handle handle = manager.insert(seminar.serialize(), seminar
-                .serialize().length); // serializing the handle
-            record = new Record(id, handle);
-
-            if (hash.insert(record) == true) { // willl it actually print?
-                System.out.println("Successfully inserted record with ID "
-                    + id);
-                System.out.println(seminar.toString());
-                System.out.println("Size: " + seminar.serialize().length);
+        kvPairID = new KVPair(id, seminar);
+        if(idBST.insert(kvPairID)) {
+            costBST.insert(new KVPair(cost, seminar));
+            dateBST.insert(new KVPair(dateTime, seminar));
+            
+            for(int i = 0; i < keywordList.length; i++){
+                keywordBST.insert(new KVPair(keywordList[i], seminar));
             }
-        }
-        else {
-            System.out.println(
-                "Insert FAILED - There is already a record with ID " + id);
-        }
-
-    }
-
-
-    /**
-     * calls the print in hash table to print
-     */
-    public void printHashTable() {
-        hash.print();
-    }
-
-
-    /**
-     * prints the free blocks
-     */
-    public void printBlocks() {
-        manager.dump();
-    }
-
-
-    /**
-     * Searches the hash table for an id and prints appropriate text
-     * 
-     * @param id
-     *            the id of the seminar
-     * @return boolean true if found, false if not
-     * @throws Exception
-     *             thrown if an exception occurs
-     */
-    @SuppressWarnings("static-access")
-    public boolean search(int id) throws Exception {
-        if (hash.search(id) != null) {
-            System.out.println("Found record with ID " + id + ":");
-            record = hash.search(id);
-            Seminar print = new Seminar(); // new seminar for printing
-            System.out.println(print.deserialize(manager.search(hash.search(id)
-                .getSeminar())).toString());
-            return true;
-        }
-        else {
-            System.out.println("Search FAILED -- There is no record with ID "
+            
+            System.out.println("Successfully inserted record with ID "
                 + id);
-            return false;
+            System.out.println(seminar.toString());
         }
+        else {
+            System.out.println("Insert FAILED - There is already a record with ID 10" + id);
+        }     
     }
 
-
+    public 
+    
     /**
      * Deletes this record in the hash table and memory manager
      * 
      * @param id
      *            the id that is being deleted
      * @return boolean true if found and successfully deleted and false if not
-     *         found
-     */
+     *         found     */
     public boolean delete(int id) {
-        if (hash.search(id) != null) {
-            Record rec = hash.delete(id); // the deleted hash
-            manager.remove(rec.getSeminar());
-            System.out.println("Record with ID " + id
-                + " successfully deleted from the database");
+        KVPair deleteId = idBST.find(id);
+        
+        if(deleteId != null) {
+            idBST.remove(deleteId);
+            costBST.remove(costBST.find(id));
+            costBST.remove(dateBST.find(id));
+
+            String[] keywords = ((Seminar)deleteId.value()).keywords();
+            for(int i = 0; i < keywords.length; i++) {
+                keywordBST.remove(keywordBST.find(keywords[i]));
+            }
+            
+            System.out.println("Record with ID "+ id +" successfully deleted from the database");
             return true;
         }
         else {
