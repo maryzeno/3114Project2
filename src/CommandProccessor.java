@@ -88,17 +88,17 @@ public class CommandProccessor {
                         int costA = myScanner.nextInt();
                         int costB = myScanner.nextInt();
                         myScanner.nextLine();
-                        db.searchRange(costA, costB);
+                        db.searchCost(costA, costB);
                     }
                     else if (type.equals("date")) {
                         String dateA = myScanner.next().trim();
                         String dateB = myScanner.next().trim();
                         myScanner.nextLine();
-                        db.searchRange(dateA, dateB);
+                        db.searchDate(dateA, dateB);
                     }
                     else if (type.equals("keyword")) {
                         String keyWord = myScanner.next().trim();
-                        db.search(keyWord);
+                        db.searchKeyWord(keyWord);
                         myScanner.nextLine();
                     }
                     else {

@@ -10,12 +10,12 @@ public class SeminarDB {
     private Seminar seminar; // the seminar that the rest of
     // the class uses
     private KVPair kvPairID;
-    
+
     private BinarySearchTree idBST;
     private BinarySearchTree costBST;
     private BinarySearchTree dateBST;
     private BinarySearchTree keywordBST;
-    
+
     /**
      * this is the constructor. it sets up the hashTable and memManager for
      * the rest of the class to use
@@ -26,7 +26,7 @@ public class SeminarDB {
      *            is the size of the memManager
      */
     public SeminarDB(String one) {
-        //binTree = new binTree(one);
+        // binTree = new binTree(one);
         idBST = new BinarySearchTree(false);
         costBST = new BinarySearchTree(true);
         dateBST = new BinarySearchTree(true);
@@ -73,46 +73,100 @@ public class SeminarDB {
         seminar = new Seminar(id, title, dateTime, length, x, y, cost,
             keywordList, description);
         kvPairID = new KVPair(id, seminar);
-        if(idBST.insert(kvPairID)) {
+        if (idBST.insert(kvPairID)) {
             costBST.insert(new KVPair(cost, seminar));
             dateBST.insert(new KVPair(dateTime, seminar));
-            
-            for(int i = 0; i < keywordList.length; i++){
+
+            for (int i = 0; i < keywordList.length; i++) {
                 keywordBST.insert(new KVPair(keywordList[i], seminar));
             }
-            
-            System.out.println("Successfully inserted record with ID "
-                + id);
+
+            System.out.println("Successfully inserted record with ID " + id);
             System.out.println(seminar.toString());
         }
         else {
-            System.out.println("Insert FAILED - There is already a record with ID 10" + id);
-        }     
+            System.out.println(
+                "Insert FAILED - There is already a record with ID 10" + id);
+        }
     }
 
-    public 
-    
+    public boolean search(int id) {
+        KVPair searchKVPair = idBST.find(id);
+        if (searchKVPair != null) {
+            System.out.println("Found record with ID " + id + ": ");
+            System.out.println(((Seminar)searchKVPair.value()).toString());
+            return true;
+        }
+        else {
+            System.out.println("Search FAILED -- There is no record with ID "
+                + id);
+            return false;
+        }
+    }
+
+    public boolean searchCost(int costA, int costB) {
+        return false;
+    }
+
+
+    public boolean searchDate(String dateA, String dateB) {
+        return false;
+    }
+
+
+    public boolean searchKeyWord(String keyWord) {
+        return false;
+    }
+
+// public boolean searchLocation(Short x1, Short y1, int radius) {
+//
+// }
+
+    public void printID() {
+        System.out.println("ID Tree:");
+        idBST.printID();
+        System.out.println("Number of Records: " + idBST.getNodeCount());
+    }
+
+    public void printDate() {
+
+    }
+
+    public void printKeyword() {
+
+    }
+
+    public void printLocation() {
+
+    }
+
+    public void printCost() {
+
+    }
+
     /**
      * Deletes this record in the hash table and memory manager
      * 
      * @param id
      *            the id that is being deleted
      * @return boolean true if found and successfully deleted and false if not
-     *         found     */
+     *         found
+     */
     public boolean delete(int id) {
         KVPair deleteId = idBST.find(id);
-        
-        if(deleteId != null) {
+
+        if (deleteId != null) {
             idBST.remove(deleteId);
             costBST.remove(costBST.find(id));
             costBST.remove(dateBST.find(id));
 
             String[] keywords = ((Seminar)deleteId.value()).keywords();
-            for(int i = 0; i < keywords.length; i++) {
+            for (int i = 0; i < keywords.length; i++) {
                 keywordBST.remove(keywordBST.find(keywords[i]));
             }
-            
-            System.out.println("Record with ID "+ id +" successfully deleted from the database");
+
+            System.out.println("Record with ID " + id
+                + " successfully deleted from the database");
             return true;
         }
         else {
@@ -123,6 +177,3 @@ public class SeminarDB {
     }
 
 }
-
-
-
