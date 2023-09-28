@@ -53,23 +53,23 @@ public class BinarySearchTreeTest extends TestCase {
         tree1.insert(kvTest3);
 
         tree1.insert(kvTest2);
-        assertTrue(tree1.remove(1));
-        assertTrue(tree1.remove(1));
+        assertTrue(tree1.remove(kvTest3));
+        assertTrue(tree1.remove(kvTest3));
 
         tree1.insert(kvTest1);
-        assertTrue(tree1.remove(2));
+        assertTrue(tree1.remove(kvTest2));
 
         KVPair<Integer, String> test2 = new KVPair<>(4, "bye");
         tree1.insert(test2);
-        assertTrue(tree1.remove(4));
+        assertTrue(tree1.remove(test2));
 
         tree3 = new BinarySearchTree<>(true);
         KVPair<Integer, String> test3 = new KVPair<>(3, "bye");
         tree3.insert(test3);
-        assertTrue(tree3.remove(3));
+        assertTrue(tree3.remove(test3));
 
         KVPair<Integer, String> test5 = new KVPair<>(4, "bye");
-        assertFalse(tree1.remove(4));
+        assertFalse(tree1.remove(test5));
 
         BinarySearchTree<Integer, String> tree4 =
             new BinarySearchTree<Integer, String>(true);
@@ -99,13 +99,13 @@ public class BinarySearchTreeTest extends TestCase {
         tree1.insert(kvTest6);
         tree1.insert(kvTest7);
         
-        assertTrue(tree1.remove(80));
-        assertTrue(tree1.remove(20));
-        assertTrue(tree1.remove(70));
-        assertTrue(tree1.remove(50));
-        assertTrue(tree1.remove(60));
-        assertTrue(tree1.remove(40));
-        assertTrue(tree1.remove(30));
+        assertTrue(tree1.remove(kvTest7));
+        assertTrue(tree1.remove(kvTest4));
+        assertTrue(tree1.remove(kvTest3));
+        assertTrue(tree1.remove(kvTest1));
+        assertTrue(tree1.remove(kvTest6));
+        assertTrue(tree1.remove(kvTest5));
+        assertTrue(tree1.remove(kvTest2));
     }
 
 }

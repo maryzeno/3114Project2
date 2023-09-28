@@ -9,12 +9,12 @@
 public class SeminarDB {
     private Seminar seminar; // the seminar that the rest of
     // the class uses
-    private KVPair kvPairID;
+    private KVPair<Integer, Seminar> kvPairID;
 
-    private BinarySearchTree idBST;
-    private BinarySearchTree costBST;
-    private BinarySearchTree dateBST;
-    private BinarySearchTree keywordBST;
+    private BinarySearchTree<Integer, Seminar> idBST;
+    private BinarySearchTree<Integer, Seminar> costBST;
+    private BinarySearchTree<String, Seminar> dateBST;
+    private BinarySearchTree<String, Seminar> keywordBST;
 
     /**
      * this is the constructor. it sets up the hashTable and memManager for
@@ -27,10 +27,10 @@ public class SeminarDB {
      */
     public SeminarDB(String one) {
         // binTree = new binTree(one);
-        idBST = new BinarySearchTree(false);
-        costBST = new BinarySearchTree(true);
-        dateBST = new BinarySearchTree(true);
-        keywordBST = new BinarySearchTree(true);
+        idBST = new BinarySearchTree<Integer, Seminar>(false);
+        costBST = new BinarySearchTree<Integer, Seminar>(true);
+        dateBST = new BinarySearchTree<String, Seminar>(true);
+        keywordBST = new BinarySearchTree<String, Seminar>(true);
     }
 
 
@@ -72,28 +72,30 @@ public class SeminarDB {
         throws Exception {
         seminar = new Seminar(id, title, dateTime, length, x, y, cost,
             keywordList, description);
-        kvPairID = new KVPair(id, seminar);
-        if (idBST.insert(kvPairID)) {
-            costBST.insert(new KVPair(cost, seminar));
-            dateBST.insert(new KVPair(dateTime, seminar));
+        kvPairID = new KVPair<Integer, Seminar>(id, seminar);
+        if(!(0 <= x && x < 128 && 0 <= y && y < 128)) {
+            System.out.println("Insert FAILED - Bad x, y coordinates: " + x + ", " + y);
+        }
+        else if (idBST.insert(kvPairID)) {
+            costBST.insert(new KVPair<Integer, Seminar>(cost, seminar));
+            dateBST.insert(new KVPair<String, Seminar>(dateTime, seminar));
 
             for (int i = 0; i < keywordList.length; i++) {
-                keywordBST.insert(new KVPair(keywordList[i], seminar));
+                keywordBST.insert(new KVPair<String, Seminar>(keywordList[i], seminar));
             }
 
             System.out.println("Successfully inserted record with ID " + id);
             System.out.println(seminar.toString());
         }
         else {
-            System.out.println(
-                "Insert FAILED - There is already a record with ID 10" + id);
+            System.out.println("Insert FAILED - There is already a record with ID " + id);
         }
     }
 
     public boolean search(int id) {
-        KVPair searchKVPair = idBST.find(id);
+        KVPair<Integer, Seminar> searchKVPair = idBST.find(id);
         if (searchKVPair != null) {
-            System.out.println("Found record with ID " + id + ": ");
+            System.out.println("Found record with ID " + id + ":");
             System.out.println(((Seminar)searchKVPair.value()).toString());
             return true;
         }
@@ -104,18 +106,18 @@ public class SeminarDB {
         }
     }
 
-    public boolean searchCost(int costA, int costB) {
-        return false;
+    /*public boolean searchCost(int costA, int costB) {
+        costBST.searchCost(costA, costB);
     }
 
 
     public boolean searchDate(String dateA, String dateB) {
-        return false;
+        dateBST.searchDate(Integer.parseInt(dateA), Integer.parseInt(dateB));
     }
 
 
     public boolean searchKeyWord(String keyWord) {
-        return false;
+        dateBST.searchKeyWord(keyWord);
     }
 
 // public boolean searchLocation(Short x1, Short y1, int radius) {
@@ -129,20 +131,20 @@ public class SeminarDB {
     }
 
     public void printDate() {
-
+        dateBST.printDate();
     }
 
     public void printKeyword() {
-
+        keywordBST.printKeyword();
     }
 
-    public void printLocation() {
-
-    }
+// public void printLocation() {
+//
+// }
 
     public void printCost() {
-
-    }
+        costBST.printCost();
+    }*/
 
     /**
      * Deletes this record in the hash table and memory manager
@@ -153,16 +155,20 @@ public class SeminarDB {
      *         found
      */
     public boolean delete(int id) {
-        KVPair deleteId = idBST.find(id);
-
+        KVPair<Integer, Seminar> deleteId = idBST.find(id);
         if (deleteId != null) {
+            Seminar deleteSeminar = deleteId.value();
+            KVPair<Integer, Seminar> deleteCost = new KVPair<Integer, Seminar>(deleteSeminar.cost(), deleteSeminar);
+            KVPair<String, Seminar> deleteDate = new KVPair<String, Seminar>(deleteSeminar.date(), deleteSeminar);
+            
             idBST.remove(deleteId);
-            costBST.remove(costBST.find(id));
-            costBST.remove(dateBST.find(id));
+            costBST.remove(deleteCost);
+            dateBST.remove(deleteDate);
 
-            String[] keywords = ((Seminar)deleteId.value()).keywords();
-            for (int i = 0; i < keywords.length; i++) {
-                keywordBST.remove(keywordBST.find(keywords[i]));
+            String[] keywords = deleteSeminar.keywords();
+            for (int i = 0; i < keywords.length; i++) {    
+                KVPair<String, Seminar> deleteKeyWord = new KVPair<String, Seminar>(keywords[i], deleteSeminar);
+                keywordBST.remove(deleteKeyWord);
             }
 
             System.out.println("Record with ID " + id
