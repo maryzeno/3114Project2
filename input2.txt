@@ -17,6 +17,7 @@ Overview of HCI Research at VT
 HCI Computer_Science VT Virginia_Tech
 This seminar will present an overview of HCI research at VT
 
+search 1
 
 insert 2
 Computational Biology and Bioinformatics in CS at Virginia Tech

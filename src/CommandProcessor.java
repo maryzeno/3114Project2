@@ -11,6 +11,7 @@ public class CommandProcessor {
         beginParsing(args[1]);
     }
 
+
     public void beginParsing(String filename) {
         try {
             Scanner myScanner = new Scanner(new File(filename));
@@ -55,7 +56,8 @@ public class CommandProcessor {
 
                         description = myScanner.nextLine().trim();
 
-                        db.insert(title, dateTime, length, x, y, cost, keywordArr, description, key);
+                        db.insert(title, dateTime, length, x, y, cost,
+                            keywordArr, description, key);
                         break;
 
                     case "search":
@@ -63,31 +65,26 @@ public class CommandProcessor {
                         switch (type) {
                             case "ID":
                                 int id = myScanner.nextInt();
-                                db.search(id);
-                                myScanner.nextLine();
+                                db.searchID(id);
                                 break;
                             case "cost":
                                 int costA = myScanner.nextInt();
                                 int costB = myScanner.nextInt();
-                                myScanner.nextLine();
-                                // db.searchCost(costA, costB);
+                                db.searchCost(costA, costB);
                                 break;
                             case "date":
                                 String dateA = myScanner.next().trim();
                                 String dateB = myScanner.next().trim();
-                                myScanner.nextLine();
-                                // db.searchDate(dateA, dateB);
+                                db.searchDate(dateA, dateB);
                                 break;
                             case "keyword":
                                 String keyword = myScanner.next().trim();
-                                // db.searchKeyword(keyword);
-                                myScanner.nextLine();
+                                db.searchKeyword(keyword);
                                 break;
                             default:
                                 Short x1 = myScanner.nextShort();
                                 Short y1 = myScanner.nextShort();
                                 int radius = myScanner.nextInt();
-                                myScanner.nextLine();
                                 // db.searchLocation(x1, y1, radius);
                                 break;
                         }
@@ -97,19 +94,19 @@ public class CommandProcessor {
                         type = myScanner.next().trim();
                         switch (type) {
                             case "date":
-                                // db.printDate();
+                                db.printDate();
                                 break;
                             case "keyword":
-                                // db.printKeyword();
+                                db.printKeyword();
                                 break;
                             case "location":
                                 // db.printLocation();
                                 break;
                             case "cost":
-                                // db.printCost();
+                                db.printCost();
                                 break;
                             default:
-                                // db.printID();
+                                db.printID();
                                 break;
                         }
                         break;
@@ -120,8 +117,11 @@ public class CommandProcessor {
                         break;
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
+

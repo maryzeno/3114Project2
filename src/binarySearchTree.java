@@ -52,7 +52,7 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
     }
 
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return (root == null);
     }
 
@@ -143,172 +143,211 @@ public class BinarySearchTree<K extends Comparable<K>, E> {
     }
 
 
-//    public void printID() {
-//        printIDHelper(root, 0);
-//    }
+    public void print() {
+        printHelper(root, 0);
+    }
+
+
+    private void printHelper(BSTNode<KVPair<K, E>> curr, int depth) {
+        if (curr == null) {
+            for (int i = 0; i < depth * 2; i++) {
+                System.out.print(" ");
+            }
+            System.out.println("null");
+            return;
+        }
+        printHelper(curr.getRight(), depth + 1);
+        for (int i = 0; i < depth * 2; i++) {
+            System.out.print(" ");
+        }
+        System.out.println(curr.getValueElement().key()); // visit the
+        // current node
+        printHelper(curr.getLeft(), depth + 1); // print the right side of the
+        // tree
+    }
+
+
+    public void searchID(K key) { // dsa returns key, good
+        searchIDHelper(root, key);
+    }
+
+
+    private void searchIDHelper(BSTNode<KVPair<K, E>> curr, K key) { // dsa
+        // returns
+        // key,
+        // good
+        if (curr == null) {
+            System.out.println("Search FAILED -- There is no record with ID "
+                + key);
+            return;
+        }
+        if (curr.getValueElement().key().compareTo(key) > 0) {
+            searchIDHelper(curr.getLeft(), key);
+        }
+        else if (curr.getValueElement().key().compareTo(key) == 0) {
+            System.out.println("Found record with ID " + key + ":");
+
+            System.out.println(curr.getValueElement().value().toString());
+        }
+        else {
+            searchIDHelper(curr.getRight(), key);
+        }
+    }
+
+
+    // done, just need to figure out how to get sem date
+    public void searchDate(String dateA, String dateB) {
+        int date1 = Integer.parseInt(dateA);
+        int date2 = Integer.parseInt(dateB);
+
+        System.out.println("Seminars with dates in range " + dateA + " to "
+            + dateB + ":");
+        int nodeCount = searchDateHelper(root, date1, date2);
+        System.out.println(nodeCount + " nodes visited in this search");
+        // ^this is wrong
+    }
+
+
+    private int searchDateHelper(
+        BSTNode<KVPair<K, E>> curr,
+        int dateA,
+        int dateB) {
+        if (curr == null) {
+            return 0;
+        }
+
+        KVPair<K, E> seminar = curr.getValueElement();
+        String seminarDateStr = ((Seminar)seminar.value()).date();
+        int nodeCount = 0;
+        int seminarDate = Integer.parseInt(seminarDateStr);
+        if (seminarDate >= dateA && seminarDate <= dateB) {
+            System.out.println(curr.getValueElement().value().toString());
+        }
+
+        if (seminarDate >= dateA) { // search left for <
+            nodeCount += searchDateHelper(curr.getLeft(), dateA, dateB);
+        }
+
+        if (seminarDate <= dateB) { // search right for >
+            nodeCount += searchDateHelper(curr.getRight(), dateA, dateB);
+        }
+        return nodeCount + 1;
+
+    }
+
+
+    // done j need to figure out how to get sem cost
+    public void searchCost(int costA, int costB) {
+        System.out.println("Seminars with costs in range " + costA + " to "
+            + costB + ":");
+        int nodeCount = searchCostHelper(root, costA, costB);
+        searchCostHelper(root, costA, costB);
+        System.out.println(nodeCount + " nodes visited in this search");
+
+    }
+
+
+    private int searchCostHelper(
+        BSTNode<KVPair<K, E>> curr,
+        int costA,
+        int costB) {
+        if (curr == null) {
+            return 0;
+        }
+
+        KVPair<K, E> seminar = curr.getValueElement();
+        int seminarCost = (int)(((Seminar)seminar.value()).cost());
+        int nodeCount = 0;
+
+        if (seminarCost >= costA && seminarCost <= costB) {
+            System.out.println(seminar.value()); // should i use toString
+        }
+
+        if (seminarCost >= costA) { // search left for >
+            nodeCount += searchCostHelper(curr.getLeft(), costA, costB);
+        }
+
+        if (seminarCost <= costB) { // search right for <
+            nodeCount += searchCostHelper(curr.getRight(), costA, costB);
+        }
+        return nodeCount + 1;
+    }
+
+//
+// public void searchID(int id) {
+// searchIDHelper(root, id);
+// }
 //
 //
-//    private void printIDHelper(BSTNode<KVPair<K, E>> curr, int depth) {
-//        if (curr == null) {
-//            for (int i = 0; i < depth; i++) {
-//                System.out.print("  ");
-//            }
-//            System.out.println("null");
-//            return;
-//        }
-//        printIDHelper(curr.getRight(), depth + 1); // print the right side of
-//                                                   // the tree
+// public void searchIDHelper(BSTNode<KVPair<K, E>> curr, int id) {
+// if (curr == null) {
+// System.out.println("Search FAILED -- There is no record with ID "
+// + id);
+// return;
+// }
 //
-//        for (int i = 0; i < depth; i++) {
-//            System.out.print("  ");
-//        }
-//        System.out.println(curr.getValueElement().key() + " "); // visit the
-//        // current node
-//        printIDHelper(curr.getLeft(), depth + 1); // print the right side of the
-//                                                  // tree
-//    }
-//
-//
-//    public void printCost() {
-//        printCostHelper(root, 0);
-//    }
-//
-//
-//    private void printCostHelper(BSTNode<KVPair<K, E>> curr, int depth) {
-//        if (curr == null) {
-//            for (int i = 0; i < depth * 2; i++) {
-//                System.out.print("  ");
-//            }
-//            System.out.println("null");
-//            return;
-//        }
-//        printCostHelper(curr.getRight(), depth + 1); // print the right side of
-//                                                     // the tree
-//
-//        for (int i = 0; i < depth * 2; i++) {
-//            System.out.print("  ");
-//        }
-//        System.out.println(curr.getValueElement().key() + " "); // visit the
-//        // current node
-//        printCostHelper(curr.getLeft(), depth + 1); // print the right side of
-//                                                    // the
-//                                                    // tree
-//    }
-//
-//
-//    public void printKeyword() {
-//
-//    }
-//
-//
-//    public void printDate() {
-//
-//    }
-//
-//
-//    // done, just need to figure out how to get sem date
-//    public void searchDate(int dateA, int dateB) {
-//        int nodeCount = searchDateHelper(root, dateA, dateB);
-//        System.out.println("Seminars with dates in range " + dateA + " to "
-//            + dateB + ":");
-//        searchDateHelper(root, dateA, dateB);
-//        System.out.println(nodeCount + " nodes visited in this search");
-//
-//    }
-//
-//
-//    private int searchDateHelper(
-//        BSTNode<KVPair<K, E>> curr,
-//        int dateA,
-//        int dateB) {
-//        if (curr == null) {
-//            return 0;
-//        }
-//
-//        KVPair<K, E> seminar = curr.getValueElement();
-//        String seminarDateStr = ((Seminar)seminar.value()).date();
-//        int seminarDate = Integer.parseInt(seminarDateStr);
-//        if (seminarDate >= dateA && seminarDate <= dateB) {
-//            System.out.println(seminar.value()); // should i use toString
-//        }
-//
-//        if (seminarDate >= dateA) { // search left for <
-//            nodeCount += searchDateHelper(curr.getLeft(), dateA, dateB);
-//        }
-//
-//        if (seminarDate <= dateB) { // search right for >
-//            nodeCount += searchDateHelper(curr.getRight(), dateA, dateB);
-//        }
-//        return nodeCount + 1;
-//
-//    }
-//
-//
-//    // done j need to figure out how to get sem cost
-//    public void searchCost(int costA, int costB) {
-//        int nodeCount = searchCostHelper(root, costA, costB);
-//        System.out.println("Seminars with costs in range " + costA + " to "
-//            + costB + ";");
-//        searchCostHelper(root, costA, costB);
-//        System.out.println(nodeCount + " nodes visited in this search");
-//
-//    }
-//
-//
-//    private int searchCostHelper(
-//        BSTNode<KVPair<K, E>> curr,
-//        int costA,
-//        int costB) {
-//        if (curr == null) {
-//            return 0;
-//        }
-//
-//        KVPair<K, E> seminar = curr.getValueElement();
-//        int seminarCost = (int)(((Seminar)seminar.value()).cost());
-//        int nodeCount = 0;
-//
-//        if (seminarCost >= costA && seminarCost <= costB) {
-//            System.out.println(seminar.value()); // should i use toString
-//        }
-//
-//        if (seminarCost >= costA) { // search left for >
-//            nodeCount += searchCostHelper(curr.getLeft(), costA, costB);
-//        }
-//
-//        if (seminarCost <= costB) { // search right for <
-//            nodeCount += searchCostHelper(curr.getRight(), costA, costB);
-//        }
-//        return nodeCount + 1;
-//    }
-//
-//
-//    // still need to implement
-//    public void searchKeyWord(String keyword) {
-//        StringBuilder string = new StringBuilder();
-//        System.out.println("Seminars matching keyword " + keyword + ":");
-//        searchKeyWordHelper(root, keyword);
-//    }
-//
-//
-//    private void searchKeyWordHelper(
-//        BSTNode<KVPair<K, E>> curr,
-//        String keyword) {
-//        if (curr == null) {
-//            return;
-//
-//        }
-//
-//        KVPair<K, E> seminar = curr.getValueElement();
-//        Seminar seminarObject = (Seminar)seminar.value();
-//        String[] seminarKeywords = seminarObject.keywords();
-//
-//        if (seminarKeywords != null && seminarKeywords.contains(keyword)) {
-//            // Print the seminar information
-//            System.out.println(seminarObject.toString());
-//        }
-//
-//    }
+// }
+
+
+    // still need to implement
+    public void searchKeyword(String keyword) {
+        System.out.println("Seminars matching keyword " + keyword + ":");
+        rangeHelper(root, keyword, keyword);
+
+    }
+
+
+    private void searchKeyWordHelper(
+        BSTNode<KVPair<K, E>> curr,
+        String keyword) {
+
+        if (curr == null) {
+            return;
+        }
+        
+        if (curr.getValueElement().key().compareTo((K)keyword) > 0) {
+            searchKeyWordHelper(curr.getLeft(), keyword);
+        }
+        else if (curr.getValueElement().key().compareTo((K)keyword) == 0) {
+            System.out.println(curr.getValueElement().value().toString());
+        }
+        else {
+            searchKeyWordHelper(curr.getRight(), keyword);
+        }
+    }
+    
+    public int rangeHelper(BSTNode<KVPair<K, E>> curr, K low, K high)
+    {
+        int numRecord = 1;
+        if (curr == null)
+        {
+            return 1;
+        }
+        if (curr.getValueElement().key().compareTo((K)low) < 0)
+        {
+            numRecord += rangeHelper(curr.getRight(), low, high);
+             
+            
+        }
+        else if (curr.getValueElement().key().compareTo(low) >0)
+            {
+                numRecord += rangeHelper(curr.getLeft(), low, high);
+                
+                
+            }
+        else
+        {
+            System.out.print(curr.getValueElement().key());
+            numRecord += rangeHelper(curr.getRight(), low, high);
+            if (curr.getValueElement().key().compareTo(high) == 0) {
+                numRecord += rangeHelper(curr.getLeft(), low, high);              
+         
+            }
+        }
+        return numRecord;
+    }
 }
 
 
 
+ 

@@ -32,6 +32,7 @@ public class SeminarDB {
         dateBST = new BinarySearchTree<String, Seminar>(true);
         keywordBST = new BinarySearchTree<String, Seminar>(true);
     }
+// keywordBST might be a list
 
 
     /**
@@ -73,78 +74,114 @@ public class SeminarDB {
         seminar = new Seminar(id, title, dateTime, length, x, y, cost,
             keywordList, description);
         kvPairID = new KVPair<Integer, Seminar>(id, seminar);
-        if(!(0 <= x && x < 128 && 0 <= y && y < 128)) {
-            System.out.println("Insert FAILED - Bad x, y coordinates: " + x + ", " + y);
+        if (!(0 <= x && x < 128 && 0 <= y && y < 128)) {
+            System.out.println("Insert FAILED - Bad x, y coordinates: " + x
+                + ", " + y);
         }
         else if (idBST.insert(kvPairID)) {
             costBST.insert(new KVPair<Integer, Seminar>(cost, seminar));
             dateBST.insert(new KVPair<String, Seminar>(dateTime, seminar));
 
             for (int i = 0; i < keywordList.length; i++) {
-                keywordBST.insert(new KVPair<String, Seminar>(keywordList[i], seminar));
+                keywordBST.insert(new KVPair<String, Seminar>(keywordList[i],
+                    seminar));
             }
 
             System.out.println("Successfully inserted record with ID " + id);
             System.out.println(seminar.toString());
         }
         else {
-            System.out.println("Insert FAILED - There is already a record with ID " + id);
+            System.out.println(
+                "Insert FAILED - There is already a record with ID " + id);
         }
     }
 
-    public boolean search(int id) {
-        KVPair<Integer, Seminar> searchKVPair = idBST.find(id);
-        if (searchKVPair != null) {
-            System.out.println("Found record with ID " + id + ":");
-            System.out.println(((Seminar)searchKVPair.value()).toString());
-            return true;
-        }
-        else {
-            System.out.println("Search FAILED -- There is no record with ID "
-                + id);
-            return false;
-        }
+// public boolean search(int id) {
+// KVPair<Integer, Seminar> searchKVPair = idBST.find(id);
+// if (searchKVPair != null) {
+// System.out.println("Found record with ID " + id + ":");
+// System.out.println(((Seminar)searchKVPair.value()).toString());
+// return true;
+// }
+// else {
+// System.out.println("Search FAILED -- There is no record with ID "
+// + id);
+// return false;
+// }
+// }
+
+
+    public void searchID(int id) {
+        idBST.searchID(id);
     }
 
-    /*public boolean searchCost(int costA, int costB) {
+
+    public void searchCost(int costA, int costB) {
         costBST.searchCost(costA, costB);
     }
 
 
-    public boolean searchDate(String dateA, String dateB) {
-        dateBST.searchDate(Integer.parseInt(dateA), Integer.parseInt(dateB));
+    public void searchDate(String dateA, String dateB) {
+        dateBST.searchDate(dateA, dateB);
     }
 
 
-    public boolean searchKeyWord(String keyWord) {
-        dateBST.searchKeyWord(keyWord);
+    public void searchKeyword(String keyword) {
+        keywordBST.searchKeyword(keyword);
     }
 
-// public boolean searchLocation(Short x1, Short y1, int radius) {
-//
+// public boolean searchCost(int costA, int costB) {
+// costBST.searchCost(costA, costB);
 // }
+//
+//
+// public boolean searchDate(String dateA, String dateB) {
+// dateBST.searchDate(Integer.parseInt(dateA), Integer.parseInt(dateB));
+// }
+//
+//
+// public boolean searchKeyWord(String keyWord) {
+// dateBST.searchKeyWord(keyWord);
+// }
+
+    // public boolean searchLocation(Short x1, Short y1, int radius) {
+    //
+    // }
+
 
     public void printID() {
         System.out.println("ID Tree:");
-        idBST.printID();
-        System.out.println("Number of Records: " + idBST.getNodeCount());
+        if (idBST.isEmpty()) {
+            System.out.println("This tree is empty");
+        }
+        else {
+            idBST.print();
+            System.out.println("Number of records: " + idBST.getNodeCount());
+        }
+
     }
 
-    public void printDate() {
-        dateBST.printDate();
-    }
-
-    public void printKeyword() {
-        keywordBST.printKeyword();
-    }
-
-// public void printLocation() {
-//
-// }
 
     public void printCost() {
-        costBST.printCost();
-    }*/
+        System.out.println("Cost Tree:");
+        costBST.print();
+        System.out.println("Number of records: " + costBST.getNodeCount());
+    }
+
+
+    public void printDate() {
+        System.out.println("Date Tree:");
+        dateBST.print();
+        System.out.println("Number of records: " + dateBST.getNodeCount());
+    }
+
+
+    public void printKeyword() {
+        System.out.println("Keyword Tree:");
+        keywordBST.print();
+        System.out.println("Number of records: " + keywordBST.getNodeCount());
+    }
+
 
     /**
      * Deletes this record in the hash table and memory manager
@@ -158,16 +195,19 @@ public class SeminarDB {
         KVPair<Integer, Seminar> deleteId = idBST.find(id);
         if (deleteId != null) {
             Seminar deleteSeminar = deleteId.value();
-            KVPair<Integer, Seminar> deleteCost = new KVPair<Integer, Seminar>(deleteSeminar.cost(), deleteSeminar);
-            KVPair<String, Seminar> deleteDate = new KVPair<String, Seminar>(deleteSeminar.date(), deleteSeminar);
-            
+            KVPair<Integer, Seminar> deleteCost = new KVPair<Integer, Seminar>(
+                deleteSeminar.cost(), deleteSeminar);
+            KVPair<String, Seminar> deleteDate = new KVPair<String, Seminar>(
+                deleteSeminar.date(), deleteSeminar);
+
             idBST.remove(deleteId);
             costBST.remove(deleteCost);
             dateBST.remove(deleteDate);
 
             String[] keywords = deleteSeminar.keywords();
-            for (int i = 0; i < keywords.length; i++) {    
-                KVPair<String, Seminar> deleteKeyWord = new KVPair<String, Seminar>(keywords[i], deleteSeminar);
+            for (int i = 0; i < keywords.length; i++) {
+                KVPair<String, Seminar> deleteKeyWord =
+                    new KVPair<String, Seminar>(keywords[i], deleteSeminar);
                 keywordBST.remove(deleteKeyWord);
             }
 
