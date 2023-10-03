@@ -1,8 +1,12 @@
 import student.TestCase;
 
 /**
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * This class tests the semSearch
+ * class to ensure that is works properly.
+ *
+ * @author Hafsa Khan (hfsakhn)
+ * @author Mary Zeno (maryzeno)
+ * @version 10/02/2023
  */
 public class SemSearchTest extends TestCase {
     /**
@@ -16,11 +20,11 @@ public class SemSearchTest extends TestCase {
     /**
      * Get code coverage of the class declaration.
      */
-    public void testMInitx()
-    {
+    public void testMInitx() {
         SemSearch sem = new SemSearch();
         assertNotNull(sem);
-        //SemSearch.main(null);
+        // SemSearch.main(null);
     }
 }
+
 

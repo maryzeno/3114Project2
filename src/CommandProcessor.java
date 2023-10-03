@@ -3,15 +3,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This is the command processor class
+ * it reads the input file.
+ * 
+ * @author Hafsa Khan (hfsakhn)
+ * @author Mary Zeno (maryzeno)
+ * @version 10/02/2023
+ */
 public class CommandProcessor {
     private static SeminarDB db;
 
+    /**
+     * this is the constructor. it reads in the arguments
+     * and begins parsing
+     * 
+     * @param args
+     *            is the string array
+     */
     public CommandProcessor(String[] args) {
         db = new SeminarDB(args[0]);
         beginParsing(args[1]);
     }
 
 
+    /**
+     * this is the beginparing method. it
+     * reads the input file.
+     * 
+     * @param filename
+     *            is the input file to be read
+     */
     public void beginParsing(String filename) {
         try {
             Scanner myScanner = new Scanner(new File(filename));
@@ -100,7 +122,7 @@ public class CommandProcessor {
                                 db.printKeyword();
                                 break;
                             case "location":
-                                // db.printLocation();
+                                db.printLocation();
                                 break;
                             case "cost":
                                 db.printCost();
@@ -123,5 +145,6 @@ public class CommandProcessor {
         }
     }
 }
+
 
 
