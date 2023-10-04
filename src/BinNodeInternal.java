@@ -2,10 +2,8 @@
 /**
  * bin node class for internal node bin tree test
  *
- * @author Hafsa Khan (hfsakhn)
- * @author Mary Zeno (maryzeno)
- * @version 09/13/2023
- */
+ *             
+ */   
 public class BinNodeInternal implements BinNode {
     private BinNode first; // first bin node
     private BinNode second; // second bin node
@@ -47,13 +45,29 @@ public class BinNodeInternal implements BinNode {
 
 
     /**
-     * inserts node into bin tree
-     * 
-     * @return boolean if it inserts
+     * inserts into bin tree
      */
-    @Override
-    public boolean insert() {
-        return false;
+    public BinNode insert(Seminar seminar, int xCoord, int yCoord, int xWidth, int yWidth, int depth) {
+        //check to see if we can split
+        //split function: just make sure the seminar is within the bounds
+        // insert % 2  == 0 for left and right side
+        // insert should check if the node should go on the left or on the right hand side.
+        //check to see if left and right nodes are interanl or leaf or empty 
+        // 
+        if(depth % 2 == 0) {
+            if(isIntersecting(seminar, seminar.x(), seminar.y(), xWidth, yWidth, depth)) { //either xWidth or yWidth divide by 2
+                insert(seminar, seminar.x(), seminar.y(), xWidth, yWidth, depth);
+            }
+            else {
+            }
+        }
+        else {
+            if(isIntersecting(seminar, seminar.x(), seminar.y(), xWidth, yWidth, depth)) { //either xWidth or yWidth divide by 2
+                insert(seminar, seminar.x(), seminar.y(), xWidth, yWidth, depth);
+            }
+            else {
+            }
+        }
     }
 
 
@@ -73,8 +87,7 @@ public class BinNodeInternal implements BinNode {
      * 
      * @return boolean if intersecting then true
      */
-    @Override
-    public boolean isIntersecting() {
+    public boolean isIntersecting(Seminar seminar, int xCoord, int yCoord, int xWidth, int yWidth, int depth) {
         return false;
     }
 
@@ -85,8 +98,8 @@ public class BinNodeInternal implements BinNode {
     @Override
     public void print() {
 
-    }
-
+    } 
+      
 }
 
 

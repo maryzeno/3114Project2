@@ -11,7 +11,7 @@ public class BinNodeEmpty implements BinNode {
     /**
      * this is the flyweight
      */
-    static public BinNodeEmpty flyweight = null; // fly weight
+    //static public BinNodeEmpty flyweight = null; // fly weight
 
     /**
      * constructor of bin node empty
@@ -26,8 +26,7 @@ public class BinNodeEmpty implements BinNode {
      */
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 
@@ -36,7 +35,6 @@ public class BinNodeEmpty implements BinNode {
      */
     @Override
     public boolean isLeaf() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -45,9 +43,9 @@ public class BinNodeEmpty implements BinNode {
      * inserts into bin tree
      */
     @Override
-    public boolean insert() {
+    public BinNode insert() {
         // TODO Auto-generated method stub
-        return false;
+        return null;
     }
 
 

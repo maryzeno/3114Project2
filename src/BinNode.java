@@ -28,7 +28,7 @@ public interface BinNode {
      * 
      * @return returns a boolean
      */
-    public boolean insert();
+    public BinNode insert();
 
 
     /**

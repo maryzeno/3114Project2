@@ -13,6 +13,7 @@ public class BinNodeLeaf<E> implements BinNode {
     // private DLList list;
     private int numCount; // count for leaf
     private E element; // element of leaf
+    private SinglyLinkedList<Seminar> list;
 
     /**
      * constructor for leaf
@@ -32,7 +33,6 @@ public class BinNodeLeaf<E> implements BinNode {
      */
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -49,14 +49,12 @@ public class BinNodeLeaf<E> implements BinNode {
 
 
     /**
-     * if it inserts
-     * 
-     * @return boolean if it inserts
+     * inserts into bin tree
      */
     @Override
-    public boolean insert() {
+    public BinNode insert() {
         // TODO Auto-generated method stub
-        return false;
+        return null;
     }
 
 

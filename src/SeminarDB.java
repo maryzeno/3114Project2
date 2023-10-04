@@ -16,6 +16,9 @@ public class SeminarDB {
     private BinarySearchTree<Integer, Seminar> costBST;
     private BinarySearchTree<String, Seminar> dateBST;
     private BinarySearchTree<String, Seminar> keywordBST;
+    //private BinTree binTree;
+    
+    private int[] locationTree;
 
     /**
      * this is the constructor. it sets up the hashTable and memManager for
@@ -25,11 +28,14 @@ public class SeminarDB {
      * @param two is the size of the memManager
      */
     public SeminarDB(String one) {
-        // binTree = new binTree(one);
+        //int oneNum = Integer.parseInt(one);
+        //binTree = new BinTree(oneNum);
         idBST = new BinarySearchTree<Integer, Seminar>(false);
         costBST = new BinarySearchTree<Integer, Seminar>(true);
         dateBST = new BinarySearchTree<String, Seminar>(true);
         keywordBST = new BinarySearchTree<String, Seminar>(true);
+        
+        locationTree = new int[10];
     }
     /**
      * When command processor reads in insert, this method is called to insert
@@ -67,6 +73,7 @@ public class SeminarDB {
         }
 
         else if (idBST.insert(kvPairID)) {
+            locationTree[idBST.getNodeCount() - 1] = id;
             costBST.insert(new KVPair<Integer, Seminar>(cost, seminar));
             dateBST.insert(new KVPair<String, Seminar>(dateTime, seminar));
             
@@ -136,7 +143,13 @@ public class SeminarDB {
      * this is the printLocation method
      */
     public void printLocation() {
-        System.out.println("Location Tree:\nE");
+        System.out.println("Location Tree:");
+        if (idBST.getNodeCount() > 0) {
+            System.out.println("Leaf with 1 objects: " + locationTree[0]);
+        }
+        else {
+            System.out.println("E");
+        }
     }
     
     // public boolean searchCost(int costA, int costB) {
@@ -177,14 +190,8 @@ public class SeminarDB {
      */
     public void printCost() {
         System.out.println("Cost Tree:");
-        
-        if (costBST.isEmpty()) {
-            System.out.println("This tree is empty");
-        }
-        else {
-            costBST.print();
-            System.out.println("Number of records: " + costBST.getNodeCount());
-        }
+        costBST.print();
+        System.out.println("Number of records: " + costBST.getNodeCount());
     }
 
     /**
@@ -192,14 +199,8 @@ public class SeminarDB {
      */
     public void printDate() {
         System.out.println("Date Tree:");
-        
-        if (dateBST.isEmpty()) {
-            System.out.println("This tree is empty");
-        }
-        else {
-            dateBST.print();
-            System.out.println("Number of records: " + dateBST.getNodeCount());
-        }
+        dateBST.print();
+        System.out.println("Number of records: " + dateBST.getNodeCount());
     }
 
     /**
@@ -207,14 +208,8 @@ public class SeminarDB {
      */
     public void printKeyword() {
         System.out.println("Keyword Tree:");
-        
-        if (keywordBST.isEmpty()) {
-            System.out.println("This tree is empty");
-        }
-        else {
-            keywordBST.print();
-            System.out.println("Number of records: " + keywordBST.getNodeCount());
-        }
+        keywordBST.print();
+        System.out.println("Number of records: " + keywordBST.getNodeCount());
     }
 
     /**
@@ -255,3 +250,5 @@ public class SeminarDB {
         }
     }
 }
+
+
